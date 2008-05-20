@@ -18,9 +18,10 @@
 {/if}
 <div class="spellchecker">
     <div class="commandbar">
-        <button onclick="oSpell.update(); return false;" title="Update"><img src={"spellcheck.png"|ezimage()} alt="Update" />Update/Rescan</button>
-        <button onclick="alert(oSpell.getText()); return false;"><img src={"get.png"|ezimage()} alt="Get Text" />alert(oSpell.getText());</button>
-        <button onclick="oSpell.setText('This is a smaple text string wiht a few mispeled words.'); return false;"><img src={"set.png"|ezimage} alt="Set Text" />oSpell.setText(...);</button>
+            <button onclick="ezspellchecker.update(); return false;" title="Update"><img src={"spellcheck.png"|ezimage()} alt="{'Update / Rescan'|i18n('ezspellchecker/design/eztext')}" />{'Rescan'|i18n('ezspellchecker/design/eztext')}</button>
+            <button onclick="ezspellchecker.toogle(); return false;" title="Toogle"><img src={"toogle.png"|ezimage()} alt="{'Disable Spellchecker'|i18n('ezspellchecker/design/eztext')}" /><span id="toogleSCButtonText" >{'Disable Spellchecker'|i18n('ezspellchecker/design/eztext')}</span></button>
+            <button onclick="alert(ezspellchecker.getText()); return false;"><img src={"get.png"|ezimage()} alt="Get Text" />{'Get current input'|i18n('ezspellchecker/design/test')}</button>
+            <button onclick="ezspellchecker.setText('{'This is a smaple text string wiht a few mispeled words.'|i18n('ezspellchecker/design/test')}'); return false;"><img src={"set.png"|ezimage} alt="Set Text" />{'Set some text'|i18n('ezspellchecker/design/test')}</button>
     </div>
     <div>
         <textarea name="DemoContent" id="spellchecker_textarea" style="width: 600px; height: 289px;"></textarea>

@@ -40,13 +40,13 @@
 
     <div class="spellchecker">
         <div class="commandbar">
-            <button onclick="oSpell.update(); return false;" title="Update"><img src={"spellcheck.png"|ezimage()} alt="{'Update / Rescan'|i18n('ezspellchecker/design/eztext')}" />{'Update / Rescan'|i18n('ezspellchecker/design/eztext')}</button>
-            <button onclick="oSpell.toogle(); return false;" title="Toogle"><img src={"toogle.png"|ezimage()} alt="{'Disable Spellchecker'|i18n('ezspellchecker/design/eztext')}" /><span id="toogleSCButtonText" >{'Disable Spellchecker'|i18n('ezspellchecker/design/eztext')}</span></button>
-            <button onclick="alert(oSpell.getText()); return false;"><img src={"get.png"|ezimage()} alt="Get Text" />{'Get current input'|i18n('ezspellchecker/design/test')}</button>
-            <button onclick="oSpell.setText('{'This is a smaple text string wiht a few mispeled words.'|i18n('ezspellchecker/design/test')}'); return false;"><img src={"set.png"|ezimage} alt="Set Text" />{'Set some text'|i18n('ezspellchecker/design/test')}</button>
+            <button onclick="ezspellchecker.update(); return false;" title="Update"><img src={"spellcheck.png"|ezimage()} alt="{'Update / Rescan'|i18n('ezspellchecker/design/eztext')}" />{'Rescan'|i18n('ezspellchecker/design/eztext')}</button>
+            <button onclick="ezspellchecker.toogle(); return false;" title="Toogle"><img src={"toogle.png"|ezimage()} alt="{'Disable Spellchecker'|i18n('ezspellchecker/design/eztext')}" /><span id="toogleSCButtonText" >{'Disable Spellchecker'|i18n('ezspellchecker/design/eztext')}</span></button>
+            <button onclick="alert(ezspellchecker.getText()); return false;"><img src={"get.png"|ezimage()} alt="Get Text" />{'Get current input'|i18n('ezspellchecker/design/test')}</button>
+            <button onclick="ezspellchecker.setText('{'This is a smaple text string wiht a few mispeled words.'|i18n('ezspellchecker/design/test')}'); return false;"><img src={"set.png"|ezimage} alt="Set Text" />{'Set some text'|i18n('ezspellchecker/design/test')}</button>
         </div>
         <div>
-            <textarea name="DemoContent" id="edit" style="width: 599px; height: 289px;"></textarea>
+            <textarea name="DemoContent" id="spellchecker_textarea" style="width: 599px; height: 289px;"></textarea>
         </div>
     </div>
     <div class="infobar">
@@ -56,46 +56,7 @@
 
 
 </div>
-{if $debug_output}
-    <script language="JavaScript" type="text/javascript">
-        window.setTimeout('initDebug();', 100 );
-    </script>
-{/if}
-
-
-<script type="text/javascript">
-    var oSpell;
-    function init() {ldelim}
-        var elText = document.getElementById('edit');
-
-        webFXSpellCheckHandler.serverURI     = {concat('/spellchecker/check/',$language)|ezurl('single')};
-        webFXSpellCheckHandler.addWordURI    = {concat('/spellchecker/add/',$language)|ezurl('single')};
-        webFXSpellCheckHandler.invalidWordBg = 'url({'redline.png'|ezimage()}) repeat-x bottom';
-        webFXSpellCheckHandler.httpMethod    = 'GET';
-        webFXSpellCheckHandler.httpParamSep  = ';';
-        webFXSpellCheckHandler.wordsPerReq   = 100;
-        webFXSpellCheckHandler.language      = '{$language|wash()}';
-        webFXSpellCheckHandler.enablePersDic = {if $enable_pers_dic}true{else}false{/if};
-        webFXSpellCheckHandler.debugOutput   = {if $debug_output}true{else}false{/if};
-
-        oSpell = new WebFXLiteSpellChecker(elText);
-
-            webFXSpellCheckHandler.textStrings=new Array();
-            webFXSpellCheckHandler.textStrings["DisableSpellchecker"] = "{'Disable Spellchecker'|i18n('ezspellchecker/design/eztext')}";
-            webFXSpellCheckHandler.textStrings["EnableSpellchecker"] = "{'Enable Spellchecker'|i18n('ezspellchecker/design/eztext')}";
-            webFXSpellCheckHandler.textStrings["Ignore"] = "{'Ignore'|i18n('ezspellchecker/design/eztext')}";
-            webFXSpellCheckHandler.textStrings["Nosuggestions"] = "{'No suggestions'|i18n('ezspellchecker/design/eztext')}";
-            webFXSpellCheckHandler.textStrings["AddtoDictionary"] = "{'Add to Dictionary'|i18n('ezspellchecker/design/eztext')}";
-
-
-{if $content}
-        oSpell.setText( "{$content}" );
-{/if}
-
-    {rdelim}
-
-    window.onload = init;
-</script>
+{include uri='design:spellchecker/spellchecker_init.tpl'}
 
 
 </div>

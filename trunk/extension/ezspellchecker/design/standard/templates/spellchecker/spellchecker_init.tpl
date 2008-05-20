@@ -28,9 +28,17 @@
 
         if ( webFXSpellCheckHandler.isConfigured == false )
         {ldelim}
+            webFXSpellCheckHandler.textStrings=new Array();
+            webFXSpellCheckHandler.textStrings["DisableSpellchecker"] = "{'Disable Spellchecker'|i18n('ezspellchecker/design/eztext')}";
+            webFXSpellCheckHandler.textStrings["EnableSpellchecker"] = "{'Enable Spellchecker'|i18n('ezspellchecker/design/eztext')}";
+            webFXSpellCheckHandler.textStrings["Ignore"] = "{'Ignore'|i18n('ezspellchecker/design/eztext')}";
+            webFXSpellCheckHandler.textStrings["Nosuggestions"] = "{'No suggestions'|i18n('ezspellchecker/design/eztext')}";
+            webFXSpellCheckHandler.textStrings["AddtoDictionary"] = "{'Add to Dictionary'|i18n('ezspellchecker/design/eztext')}";
+
+
             webFXSpellCheckHandler.serverURI     = {concat('/spellchecker/check/',$language)|ezurl('single')};
             webFXSpellCheckHandler.addWordURI    = {concat('/spellchecker/add/',$language)|ezurl('single')};
-            webFXSpellCheckHandler.invalidWordBg = '#f00'; {*'url({'redline.gif'|ezimage()}) repeat-x bottom';*}
+            webFXSpellCheckHandler.invalidWordBg = 'url({'redline.gif'|ezimage()}) repeat-x bottom';
             webFXSpellCheckHandler.httpMethod    = 'GET';
             webFXSpellCheckHandler.httpParamSep  = ';';
             webFXSpellCheckHandler.wordsPerReq   = 100;
@@ -38,13 +46,6 @@
             webFXSpellCheckHandler.enablePersDic = {if $enable_pers_dic}true{else}false{/if};
             webFXSpellCheckHandler.debugOutput   = {if $debug_output}true{else}false{/if};
             webFXSpellCheckHandler.isConfigured  = true;
-
-            webFXSpellCheckHandler.textStrings=new Array();
-            webFXSpellCheckHandler.textStrings["DisableSpellchecker"] = "{'Disable Spellchecker'|i18n('ezspellchecker/design/eztext')}";
-            webFXSpellCheckHandler.textStrings["EnableSpellchecker"] = "{'Enable Spellchecker'|i18n('ezspellchecker/design/eztext')}";
-            webFXSpellCheckHandler.textStrings["Ignore"] = "{'Ignore'|i18n('ezspellchecker/design/eztext')}";
-            webFXSpellCheckHandler.textStrings["Nosuggestions"] = "{'No suggestions'|i18n('ezspellchecker/design/eztext')}";
-            webFXSpellCheckHandler.textStrings["AddtoDictionary"] = "{'Add to Dictionary'|i18n('ezspellchecker/design/eztext')}";
 
         {rdelim}
 

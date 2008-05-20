@@ -52,8 +52,6 @@
 
 .webfx-spellchecker-menu .separator {
     border-bottom: 1px solid #2e3436;
-/*     border-bottom: 1px solid threedhighlight; */
-    overflow: hidden;
     margin: 2px;
 }
 
@@ -208,6 +206,7 @@ div#debugwindowcontent {
     width: 193px;
     padding: 3px;
     font-weight: bold;
+    left: 0px;
 }
 
 div#debugwindow h3 {
