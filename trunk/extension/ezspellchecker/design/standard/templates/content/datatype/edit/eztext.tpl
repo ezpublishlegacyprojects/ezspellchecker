@@ -36,49 +36,9 @@
         </div>
     </div>
     <div class="infobar">
-        <div id="infotext">&nbsp;</div>
+        <div id="{$textarea_id|wash()}_infotext" class="infotext">&nbsp;</div>
         <div id="copyright">eZ Spellchecker<br />(c) 2008 eZ Systems</div>
     </div>
 </div>
-{if $debug_output}
-    <script language="JavaScript" type="text/javascript">
-        window.setTimeout('initDebug();', 100 );
-    </script>
-{/if}
 </div>
-<script type="text/javascript">
-    var {$spellchecker_id|wash()};
-    function initSpellchecker_{$spellchecker_id|wash()}() {ldelim}
-        var elText{$attribute.id} = document.getElementById('{$textarea_id|wash()}');
-
-        if ( webFXSpellCheckHandler.isConfigured == false )
-        {ldelim}
-            webFXSpellCheckHandler.serverURI     = {concat('/spellchecker/check/',$language)|ezurl('single')};
-            webFXSpellCheckHandler.addWordURI    = {concat('/spellchecker/add/',$language)|ezurl('single')};
-            webFXSpellCheckHandler.invalidWordBg = 'url({'redline.png'|ezimage()}) repeat-x bottom';
-            webFXSpellCheckHandler.httpMethod    = 'GET';
-            webFXSpellCheckHandler.httpParamSep  = ';';
-            webFXSpellCheckHandler.wordsPerReq   = 100;
-            webFXSpellCheckHandler.language      = '{$language|wash()}';
-            webFXSpellCheckHandler.enablePersDic = {if $enable_pers_dic}true{else}false{/if};
-            webFXSpellCheckHandler.debugOutput   = {if $debug_output}true{else}false{/if};
-            webFXSpellCheckHandler.isConfigured  = true;
-
-            webFXSpellCheckHandler.textStrings=new Array();
-            webFXSpellCheckHandler.textStrings["DisableSpellchecker"] = "{'Disable Spellchecker'|i18n('ezspellchecker/design/eztext')}";
-            webFXSpellCheckHandler.textStrings["EnableSpellchecker"] = "{'Enable Spellchecker'|i18n('ezspellchecker/design/eztext')}";
-            webFXSpellCheckHandler.textStrings["Ignore"] = "{'Ignore'|i18n('ezspellchecker/design/eztext')}";
-            webFXSpellCheckHandler.textStrings["Nosuggestions"] = "{'No suggestions'|i18n('ezspellchecker/design/eztext')}";
-            webFXSpellCheckHandler.textStrings["AddtoDictionary"] = "{'Add to Dictionary'|i18n('ezspellchecker/design/eztext')}";
-
-        {rdelim}
-
-        {$spellchecker_id|wash()} = new WebFXLiteSpellChecker( elText{$attribute.id} );
-{if $content}
-        {$spellchecker_id|wash()}.setText( "{$content}" );
-{/if}
-
-    {rdelim}
-
-    window.setTimeout('initSpellchecker_{$spellchecker_id|wash()}()', 200 );
-</script>
+{include uri='design:spellchecker/spellchecker_init.tpl' attribute_id=$attribute.id}

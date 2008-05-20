@@ -93,7 +93,7 @@ var webFXSpellCheckHandler = {
     instances    : new Array(),
     serverURI    : '/spellchecker/check/en', // http://me.eae.net/stuff/spellchecker/spell.cgi
     addWordURI   : '/spellchecker/add/en', // http://me.eae.net/stuff/spellchecker/spell.cgi
-    invalidWordBg: 'red',        // url(http://me.eae.net/stuff/spellchecker/images/redline.png) repeat-x bottom
+    invalidWordBg: '#f00',        // url(http://me.eae.net/stuff/spellchecker/images/redline.png) repeat-x bottom
     httpMethod   : 'POST',       // GET or POST
     httpParamSep : ';',          // Use ampersand ('&') for PHP backend (default configuration doesn't support semicolon separator)
     wordsPerReq  : 100,
@@ -139,6 +139,7 @@ webFXSpellCheckHandler._spellCheck = function(word) {
     webFXSpellCheckHandler.pending.push(word);
     if (!webFXSpellCheckHandler.activeRequest) { window.setTimeout('webFXSpellCheckHandler._askServer()', 10); }
 
+    debug( "checked word: '"+ word +"'" );
     return RTSS_PENDING_WORD;
 };
 
@@ -241,7 +242,7 @@ webFXSpellCheckHandler._updateWords = function() {
 
 webFXSpellCheckHandler._showSuggestionsMenu = function(e, el, word, instance) {
     var menu, len, item, sep, frame, aSuggestions, doc, x, y, o;
-
+debug ('_showSuggestionsMenu' + instance );
     if (!webFXSpellCheckHandler.words[word]) { return; }
 
     menu = document.getElementById('webfxSpellCheckMenu');
@@ -362,14 +363,6 @@ webFXSpellCheckHandler._addWordResponseHandler = function(sData, word) {
     }
     catch (oe) { return; }
 
-    infotextline = document.getElementById('infotext');
-
-    if ( data[0] )
-    {
-        infotextline.innerHTML = data[0];
-    }
-
-
     if (word) {
         webFXSpellCheckHandler.words[word][0] = RTSS_VALID_WORD;
         webFXSpellCheckHandler.words[word][1] = [];
@@ -378,15 +371,29 @@ webFXSpellCheckHandler._addWordResponseHandler = function(sData, word) {
         for (i = 0; i < len; i++) {
             o = webFXSpellCheckHandler.instances[i];
             o.self.rescan();
+            var infotextline = document.getElementById( o.self.elText.id + '_infotext' );
+
+            if ( data[0] )
+            {
+                infotextline.innerHTML = data[0];
+            }
         }
+
     }
+
+
     webFXSpellCheckHandler.activeRequest = false;
     if (webFXSpellCheckHandler.pending.length) { webFXSpellCheckHandler._askServer(); }
     window.setTimeout('webFXSpellCheckHandler._clearInoText()', 2000 );
 };
 
 webFXSpellCheckHandler._clearInoText = function() {
+    len = webFXSpellCheckHandler.instances.length;
+    for (i = 0; i < len; i++) {
+        o = webFXSpellCheckHandler.instances[i];
+        var infotextline = document.getElementById( o.self.elText.id + '_infotext' );
         infotextline.innerHTML = '&nbsp;';
+    }
 }
 
 webFXSpellCheckHandler._ignoreWord = function() {

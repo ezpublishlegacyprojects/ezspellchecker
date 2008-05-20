@@ -101,11 +101,12 @@ function WebFXLiteSpellChecker( el ) {
 
     /* Create markup container */
     elCont = document.createElement('div');
+    elCont.id = el.id + '_content';
     elCont.className = 'webfx-spell-markupbox';
     el.parentNode.insertBefore(elCont, el);
     elCont.style.width = el.clientWidth + 'px';
     elCont.style.height = el.clientHeight + 'px';
-    elCont.style.zIndex = '10';
+//     elCont.style.zIndex = '10';
     el.className = 'webfx-spell-textarea';
     this.elCont = elCont;
 
@@ -120,7 +121,7 @@ function WebFXLiteSpellChecker( el ) {
     o.self   = this;
     this._instance = webFXSpellCheckHandler.instances.length;
     webFXSpellCheckHandler.instances.push(o);
-
+    debug( 'New Instance: ' + this._instance );
     /*
      * Assign event handlers
      */
@@ -133,28 +134,29 @@ function WebFXLiteSpellChecker( el ) {
 }
 
 WebFXLiteSpellChecker.prototype._assignEventHandlers = function() {
+    debug( '_assignEventHandlers: ' + this._instance );
     var agt = navigator.userAgent.toLowerCase();
     var isGecko = ((agt.indexOf('gecko') != -1) && (agt.indexOf("khtml") == -1));
 
-    self = this;
+    var testvar = webFXSpellCheckHandler.instances[this._instance].self;
     this.elText.onchange = this.elText.onkeyup = function(e) {
-        self._handleKey();
-        self._syncScroll();
+        testvar._handleKey();
+        testvar._syncScroll();
     };
 
     this.elText.onkeyup = this.elText.onkeyup = function(e) {
-        self._handleKey();
-        self._syncScroll();
+        testvar._handleKey();
+        testvar._syncScroll();
     };
 
     this.elText.onselect = function(e) {
-        self._determineActiveNode();
-        self._syncScroll();
+        testvar._determineActiveNode();
+        testvar._syncScroll();
     };
 
     this.elText.onclick = function(e) {
-        self._handleClick((e)?e:window.event);
-        self._syncScroll();
+        testvar._handleClick((e)?e:window.event);
+        testvar._syncScroll();
     };
 
     /*
@@ -164,18 +166,19 @@ WebFXLiteSpellChecker.prototype._assignEventHandlers = function() {
      */
     if (isGecko) {
         this.elText.onmousemove = function(e) {
-            self._syncScroll();
+            testvar._syncScroll();
         };
     }
     else {
         this.elText.onscroll = function(e) {
-            self._syncScroll();
+            testvar._syncScroll();
         };
     }
 };
 
 WebFXLiteSpellChecker.prototype._unassignEventHandlers = function() {
 
+    debug( '_unassignEventHandlers: ' + this._instance );
     this.elText.onchange = false;
     this.elText.onkeyup = false;
     this.elText.onselect = false;
@@ -211,13 +214,13 @@ WebFXLiteSpellChecker.prototype.replaceActive = function(word) {
 
         for (n = offset-2; n >= 0; n--) {
             c = str.substr(n, 1);
-            if (!c.match(/[\w\'öüäÜÖÄß]/)) { break; } //'
+            if (!c.match(/[\w\']/)) { break; } //'
         }
         start = n+1;
 
         for (n = offset; n < len; n++) {
             c = str.substr(n, 1);
-            if (!c.match(/[\w\'öüäÜÖÄß]/)) { break; } //'
+            if (!c.match(/[\w\']/)) { break; } //'
         }
         end = n;
 
@@ -255,6 +258,7 @@ WebFXLiteSpellChecker.prototype._getSelection = function() {
     else {
         this._start = this.elText.selectionStart;
         this._end   = this.elText.selectionEnd;
+        debug( 'Start: ' + this._start + ' / End: ' + this._end );
     }
 };
 
@@ -322,8 +326,6 @@ WebFXLiteSpellChecker.prototype._createCharNode = function(word) {
 
 
 WebFXLiteSpellChecker.prototype._determineActiveNode = function() {
-    debug('_determineActiveNode');
-
     var i, len, c, str, node, l;
 
     this._getSelection();
@@ -343,7 +345,9 @@ WebFXLiteSpellChecker.prototype._determineActiveNode = function() {
         if (i+n >= this._end) { break; }
         i += n;
     }
-    debug(this._nodeEnd);
+    if ( this._nodeEnd ) {
+        debug( "_determineActiveNode: '" + this._nodeEnd.nodeValue + "'" );
+    }
 
 };
 
@@ -357,7 +361,7 @@ WebFXLiteSpellChecker.prototype._setWord = function(el, word) {
     for (i = 0; i < len; i++) {
         c = word.substr(i, 1);
 
-        if (!c.match(/[\w\'öüäÜÖÄß]/)) { // Match all but numbers, letters, - and '
+        if (!c.match(/[\w\']/)) { // Match all but numbers, letters, - and '
             if (str) {
                 el.parentNode.insertBefore(this._createWordNode(str), el);
             }
@@ -407,7 +411,7 @@ WebFXLiteSpellChecker.prototype._insertWord = function(el, word) {
     node = null;
     for (i = 0; i < len; i++) {
         c = word.substr(i, 1);
-        if (!c.match(/[\w\'öüäÜÖÄß]/)) { // Match all but numbers, letters, - and '
+        if (!c.match(/[\w\']/)) { // Match all but numbers, letters, - and '
             if (str) {
                 if (el) { node = this.elCont.insertBefore(this._createWordNode(str), el); }
                 else { node = this.elCont.appendChild(this._createWordNode(str)); }
@@ -510,7 +514,7 @@ WebFXLiteSpellChecker.prototype._insert = function(startPos, endPos) {
         word = '';
         for (i = 0; ; i++) {
             c = str.substr(i, 1);
-            if ((i >= len) || (!c.match(/[\w\'öüäÜÖÄß]/))) { // all but numbers, letters and '
+            if ((i >= len) || (!c.match(/[\w\']/))) { // all but numbers, letters and '
                 if (word) {
                     newNode = this._createWordNode(word);
                     if (node) { this.elCont.insertBefore(newNode, node); }

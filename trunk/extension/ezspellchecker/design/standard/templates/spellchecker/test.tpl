@@ -23,7 +23,7 @@
         <button onclick="oSpell.setText('This is a smaple text string wiht a few mispeled words.'); return false;"><img src={"set.png"|ezimage} alt="Set Text" />oSpell.setText(...);</button>
     </div>
     <div>
-        <textarea name="DemoContent" id="edit" style="width: 600px; height: 289px;"></textarea>
+        <textarea name="DemoContent" id="spellchecker_textarea" style="width: 600px; height: 289px;"></textarea>
     </div>
 </div>
     <div class="infobar">
@@ -31,38 +31,11 @@
         <div id="copyright">(c) 2008 eZ Systems</div>
     </div>
 
-<script type="text/javascript">
-    var oSpell;
+{include uri='design:spellchecker/spellchecker_init.tpl'}
 
-    function init() {ldelim}
-        var elText = document.getElementById('edit');
-
-        webFXSpellCheckHandler.serverURI     = {concat('/spellchecker/check/',$language)|ezurl('single')};
-        webFXSpellCheckHandler.addWordURI    = {concat('/spellchecker/add/',$language)|ezurl('single')};
-        webFXSpellCheckHandler.invalidWordBg = 'url({'redline.png'|ezimage()}) repeat-x bottom';
-        webFXSpellCheckHandler.httpMethod    = 'GET';
-        webFXSpellCheckHandler.httpParamSep  = ';';
-        webFXSpellCheckHandler.wordsPerReq   = 100;
-        webFXSpellCheckHandler.language      = '{$language|wash()}';
-        webFXSpellCheckHandler.enablePersDic = {if $enable_pers_dic}true{else}false{/if};
-        webFXSpellCheckHandler.debugOutput   = {if $debug_output}true{else}false{/if};
-
-
-        oSpell = new WebFXLiteSpellChecker(elText);
-{if $content}
-        oSpell.setText( '{$content|wash()}' );
-{/if}
-
-    {rdelim}
-
-    window.onload = init;
-</script>
 
 <input type="submit" name="ShowText" value="Show" class="button" />
 
-{if $debug_output}
-    <div id="debugField">&nbsp;</div>
-{/if}
 
 
 </form>
