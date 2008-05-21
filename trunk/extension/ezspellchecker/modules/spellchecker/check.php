@@ -49,10 +49,10 @@ elseif ( $http->hasPostVariable( '0' )  )
     $getRequest = '0=' . $http->postVariable( '0' );
 }
 
+$requestArray = array();
 if ( $getRequest )
 {
     $getArray = explode( ';', $getRequest );
-    $requestArray = array();
     foreach ( $getArray as $getValue )
     {
         $getArray = explode( '=', $getValue);

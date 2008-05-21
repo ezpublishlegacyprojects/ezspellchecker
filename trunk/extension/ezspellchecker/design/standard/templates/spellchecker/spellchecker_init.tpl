@@ -14,7 +14,7 @@
     {def $enable_pers_dic=true()}
 {/if}
 {if is_set($debug_output)|not}
-    {def $debug_output=true()}
+     {def $debug_output=cond( eq( ezini( "SpellcheckerSettings", "DebugOutput", "spellchecker.ini" ), "enabled" ), true(), false() )}
 {/if}
 {if is_set($content)|not}
     {def $content=''}

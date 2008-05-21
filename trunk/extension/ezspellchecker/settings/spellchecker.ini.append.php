@@ -3,7 +3,7 @@
 [SpellcheckerSettings]
 NumberOfMaxSuggestions=10
 DefaultLanguage=de
-DebugOutput=enabled
+DebugOutput=disabled
 
 [PersonalDictionarySettings]
 PersonalDictionary=enabled

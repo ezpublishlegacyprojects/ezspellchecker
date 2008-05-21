@@ -391,7 +391,7 @@ webFXSpellCheckHandler._addWordResponseHandler = function(sData, word) {
             o.self.rescan();
             var infotextline = document.getElementById( o.self.elText.id + '_infotext' );
 
-            if ( data[0] )
+            if ( data[0] && infotextline )
             {
                 infotextline.innerHTML = data[0];
             }
@@ -410,7 +410,10 @@ webFXSpellCheckHandler._clearInoText = function() {
     for (i = 0; i < len; i++) {
         o = webFXSpellCheckHandler.instances[i];
         var infotextline = document.getElementById( o.self.elText.id + '_infotext' );
-        infotextline.innerHTML = '&nbsp;';
+        if ( infotextline )
+        {
+            infotextline.innerHTML = '&nbsp;';
+        }
     }
 }
 
