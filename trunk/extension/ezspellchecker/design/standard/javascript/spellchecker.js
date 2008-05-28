@@ -99,8 +99,6 @@ function WebFXLiteSpellChecker( el ) {
     this._start    = 0;
     this._len      = 0;
 
-    isIE    = ((agt.indexOf("msie")  != -1) && (agt.indexOf("opera") == -1));
-
     /* Create markup container */
     elCont = document.createElement('div');
     elCont.id = el.id + '_content';
@@ -325,7 +323,8 @@ WebFXLiteSpellChecker.prototype._createWordNode = function(word) {
 };
 
 WebFXLiteSpellChecker.prototype._createCharNode = function(word) {
-    isIE    = ((agt.indexOf("msie")  != -1) && (agt.indexOf("opera") == -1));
+    var agt = navigator.userAgent.toLowerCase();
+    var isIE    = ((agt.indexOf("msie")  != -1) && (agt.indexOf("opera") == -1));
     if ( isIE ) {
         var node = document.createElement('div');
     }
