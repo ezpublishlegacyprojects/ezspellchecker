@@ -66,9 +66,10 @@ if ( $getRequest )
 
 $sc = new eZSpellchecker( $language );
 $resultArray = array( );
-
 foreach( $requestArray as $key => $value )
 {
+    $value = rawurldecode( $value);
+    if (@!iconv( "UTF-8", "ISO-8859-1", $value ) )
     $value =  iconv( "UTF-8", "ISO-8859-1", $value );
     if ( $sc->checkWord( $value ) )
     {

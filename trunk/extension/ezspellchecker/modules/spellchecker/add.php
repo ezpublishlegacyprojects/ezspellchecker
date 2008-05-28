@@ -59,13 +59,15 @@ if ( !$language || strlen( $language ) != 2 )
 $sc = new eZSpellchecker( $language );
 $resultArray = array();
 
-$word =  iconv( "UTF-8", "ISO-8859-1", $word );
+if (@!iconv( "UTF-8", "ISO-8859-1", $word ) )
+    $word = iconv( "UTF-8", "ISO-8859-1", $word );
 
 if ( $sc && !$error )
 {
     if ( $sc->addWord( $word ) )
     {
-        $word =  iconv( "ISO-8859-1", "UTF-8", $word );
+        if (@!iconv( "UTF-8", "ISO-8859-1", $word ) )
+            $word = iconv( "ISO-8859-1", "UTF-8", $word );
         $type = $sc->isUserBasedDictionary() ? 'your' : 'the';
         $resultArray[] = array( ezi18n( 'ezspellchecker/add', "'%word' added to %type dictionary", false, array( '%word' => $word, '%type' => $type ) ) );
     }
