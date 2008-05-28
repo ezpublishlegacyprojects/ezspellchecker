@@ -99,13 +99,20 @@ function WebFXLiteSpellChecker( el ) {
     this._start    = 0;
     this._len      = 0;
 
+    isIE    = ((agt.indexOf("msie")  != -1) && (agt.indexOf("opera") == -1));
+
     /* Create markup container */
     elCont = document.createElement('div');
     elCont.id = el.id + '_content';
     elCont.className = 'webfx-spell-markupbox';
     el.parentNode.insertBefore(elCont, el);
     elCont.style.width = el.clientWidth + 'px';
-    elCont.style.height = el.clientHeight + 'px';
+    if ( isIE ) {
+        elCont.style.height = ( el.clientHeight + 4) + 'px'; 
+    }
+    else {
+        elCont.style.height = el.clientHeight + 'px'; 
+    }
 //     elCont.style.zIndex = '10';
     el.className = 'webfx-spell-textarea';
     this.elCont = elCont;
@@ -318,7 +325,13 @@ WebFXLiteSpellChecker.prototype._createWordNode = function(word) {
 };
 
 WebFXLiteSpellChecker.prototype._createCharNode = function(word) {
-    var node = document.createElement('span');
+    isIE    = ((agt.indexOf("msie")  != -1) && (agt.indexOf("opera") == -1));
+    if ( isIE ) {
+        var node = document.createElement('div');
+    }
+    else {
+        var node = document.createElement('span');
+    }
     node.className = 'webfx-spellchecker-char';
     node.appendChild(document.createTextNode(word));
     node.style.background = 'none';

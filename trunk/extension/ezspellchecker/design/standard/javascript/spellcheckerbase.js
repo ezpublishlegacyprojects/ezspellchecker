@@ -145,7 +145,10 @@ webFXSpellCheckHandler._spellCheck = function(word) {
 webFXSpellCheckHandler._askServer = function() {
     var i, len, uri, arg, word, aMap, xmlHttp;
     var async = true;
-    if (webFXSpellCheckHandler.activeRequest) { return; }
+    if (webFXSpellCheckHandler.activeRequest)
+    { 
+     return; 
+    }
     arg = '';
     len = webFXSpellCheckHandler.pending.length;
     if (len) {
@@ -157,7 +160,7 @@ webFXSpellCheckHandler._askServer = function() {
 
             word = webFXSpellCheckHandler.pending.shift();
 
-            arg += ((i)?webFXSpellCheckHandler.httpParamSep:'') + i + '=' + word;
+            arg += ((i)?webFXSpellCheckHandler.httpParamSep:'') + i + '=' + encodeURI( word );
             webFXSpellCheckHandler.words[word] = [RTSS_PENDING_WORD];
             aMap[i] = word;
         }
@@ -194,7 +197,10 @@ webFXSpellCheckHandler._serverResponseHandler = function(sData, aMap) {
     try {
         eval(sData);
     }
-    catch (oe) { return; }
+    catch (oe) { 
+        webFXSpellCheckHandler.activeRequest = false;
+        return;
+    }
     len = data.length;
     for (i = 0; i < len; i++) {
         flag = data[i][0];
@@ -304,17 +310,12 @@ debug ('_showSuggestionsMenu' + instance );
     var ns6=document.getElementById&&!document.all
     var ie4=document.all
 
-    var Xoffset=70;
-    var Yoffset= 120;
-
-    if (ns4||ns6) {
         Yoffset=0;
         Xoffset=0;
-    }
-    var x=(ns4||ns6)?e.pageX:event.x+document.body.scrollLeft;
+    var x=(ns4||ns6)?e.pageX:event.clientX+document.body.scrollLeft;
     menu.style.left=x+Xoffset +  "px";
 
-    var y=(ns4||ns6)?e.pageY:event.y+document.body.scrollTop;
+    var y=(ns4||ns6)?e.pageY:event.clientY+document.body.scrollTop;
     menu.style.top=y+Yoffset +  "px";
 
     menu.style.display = 'block';
@@ -344,7 +345,7 @@ webFXSpellCheckHandler._addWord = function(instance, word) {
 
     webFXSpellCheckHandler.activeRequest = true;
 
-    arg = '0=' + word;
+    arg = '0=' + encodeURI( word );
 
 
     if (webFXSpellCheckHandler.httpMethod == 'GET') {

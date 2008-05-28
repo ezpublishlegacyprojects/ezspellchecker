@@ -237,22 +237,22 @@ span.msg-error {
 }
 
 
-span.sc_info {
+.sc_info {
     position:relative;
     z-index:24;
     color:#000;
     text-decoration:none;
 }
 
-span.sc_info :hover {
+.sc_info:hover {
     z-index:25;
 }
 
-span.sc_info  span {
+.sc_info  span {
     display: none
 }
 
-span.sc_info:hover span { /*the span will display just on :hover state*/
+.sc_info:hover span { /*the span will display just on :hover state*/
     display:block;
     position:absolute;
     top:5px;
