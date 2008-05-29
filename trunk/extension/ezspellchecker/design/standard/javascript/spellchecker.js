@@ -337,6 +337,22 @@ WebFXLiteSpellChecker.prototype._createCharNode = function(word) {
     return node;
 };
 
+WebFXLiteSpellChecker.prototype._createSpaceNode = function(word) {
+    var agt = navigator.userAgent.toLowerCase();
+    var isIE    = ((agt.indexOf("msie")  != -1) && (agt.indexOf("opera") == -1));
+    if ( isIE ) {
+        var node = document.createElement('div');
+    }
+    else {
+        var node = document.createElement('span');
+    }
+    node.className = 'webfx-spellchecker-char';
+    node.style.width = '0.22em';
+    node.appendChild(document.createTextNode('-'));
+    node.style.background = 'none';
+    return node;
+};
+
 
 WebFXLiteSpellChecker.prototype._determineActiveNode = function() {
     var i, len, c, str, node, l;
@@ -379,10 +395,10 @@ WebFXLiteSpellChecker.prototype._setWord = function(el, word) {
                 el.parentNode.insertBefore(this._createWordNode(str), el);
             }
 
-            last = (el.previousSibling)?el.previousSibling.nodeValue:'';
+            last = (el.previousSibling)?el.previousSibling.nodeValue: ' ';
             switch (c) {
                 case '\n': node = document.createElement('br');                   break;
-                case ' ':  node = document.createTextNode((last == ' ')?' ':' '); break;
+                case ' ':  node = (last == ' ') ? this._createSpaceNode( ) : document.createTextNode( ' ' ); break;
                 default:   node = this._createCharNode(c);
             };
             el.parentNode.insertBefore(node, el);
@@ -431,10 +447,10 @@ WebFXLiteSpellChecker.prototype._insertWord = function(el, word) {
                 else { node = this.elCont.appendChild(this._createWordNode(str)); }
             }
 
-            last = ((el) && (el.previousSibling))?el.previousSibling.nodeValue:'';
+            last = ((el) && (el.previousSibling))?el.previousSibling.nodeValue : ' ';
             switch (c) {
                 case '\n': node = document.createElement('br'); break;
-                case ' ':  node = document.createTextNode((last == ' ')?' ':' '); break;
+                case ' ':  node = (last == ' ') ? this._createSpaceNode( ) : document.createTextNode( ' ' ); break;
                 default:   node = this._createCharNode(c);
             };
             if (el) { this.elCont.insertBefore(node, el); }
@@ -537,13 +553,13 @@ WebFXLiteSpellChecker.prototype._insert = function(startPos, endPos) {
                 }
                 if (i >= len) { break; }
 
-                last = (node && node.previousSibling)?node.previousSibling.nodeValue:'';
+                last = (node && node.previousSibling)?node.previousSibling.nodeValue:' ';
                 switch (c) {
                     case '\n': newNode = document.createElement('br');                   break;
-                    case ' ':  node = document.createTextNode((last == ' ')?' ':' '); break;
+                    case ' ':  node = (last == ' ') ? this._createSpaceNode( ) : document.createTextNode( ' ' ); break;
                     default:   newNode = document.createTextNode(c);
                 };
-                if ( newNode ) {    
+                if ( newNode ) {
                     if (node) { this.elCont.insertBefore(newNode, node); }
                     else { this.elCont.appendChild(newNode); }
                 }
