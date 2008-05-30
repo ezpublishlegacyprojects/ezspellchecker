@@ -1,0 +1,21 @@
+eZ publish spell checker extension
+===================================
+
+
+
+Copyright notices
+-----------------
+
+- Access checking while importing documents with images in them is not complete.
+  The access to create images are not checked properly.
+- While exporting, if the user has not access to read images, they are just ignored. 
+  Should replace them with a dummy image which says "no access".
+- Importing document with images and storing the images in media does not work properly.
+
+
+Known Bugs
+----------
+* Drag and drop does not trigger an update
+Markup (curly lines) are not moved/removed in real time, for instance if a key is held down the markup won't be updated until it's released.
+The spelling is checked on all words, even the currently active one. It should only check a word once a separator has been entered after it.
+</ul>
