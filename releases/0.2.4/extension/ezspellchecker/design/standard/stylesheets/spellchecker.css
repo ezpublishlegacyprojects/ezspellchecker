@@ -1,0 +1,268 @@
+/*----------------------------------------------------------------------------\
+|                   Copyright (c) 2005, 2006 Emil A Eklund                    |
+|- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -|
+| This program is  free software;  you can redistribute  it and/or  modify it |
+| under the terms of the MIT License.                                         |
+|-----------------------------------------------------------------------------|
+| Refer to the source file for complete license terms and further information |
+\----------------------------------------------------------------------------*/
+
+.webfx-spellchecker-menu {
+    border: none;
+    position: absolute;
+    z-index: 100;
+    width: auto !important;
+    width: 150px;
+}
+
+.webfx-spellchecker-menu .inner {
+    border: #2e3436 1px solid;
+    background: #d3d7cf;
+    padding: 2px;
+}
+
+.webfx-spellchecker-char,
+.webfx-spellchecker-word {
+    float: left;
+}
+
+
+.webfx-spellchecker-char {
+    padding-left: 0px;
+    padding-right: 0px;
+}
+.webfx-spellchecker-word {
+    padding-left: 1px;
+    padding-right: 2px;
+}
+
+
+.webfx-spellchecker-menu a {
+    display: block;
+    font: menu;
+    color: menutext;
+    padding: 1px 5ex 1px 3ex;
+    text-decoration: none;
+}
+
+.webfx-spellchecker-menu a:hover {
+    background: #eeeeec;
+    color: #000;
+}
+
+.webfx-spellchecker-menu .separator {
+    border-bottom: 1px solid #2e3436;
+    margin: 2px;
+    height: 1px;
+    background: #d3d7cf;
+}
+
+.webfx-spell-textarea {
+    border: none;
+    position: absolute;
+    background: transparent;
+    color: #000;
+    font: menu;
+    line-height: expression('1.5em');
+    padding: 1px;
+}
+
+.webfx-spell-markupbox {
+    position: absolute;
+    overflow: hidden;
+    font: menu;
+    line-height: expression('1.5em');
+    padding: 3px 1px 1px 1px;
+    background: #eeeeec;
+    color: #eeeeec;
+    border: 1px solid #2e3436;
+/*     white-space: pre; */
+}
+
+.spellchecker {
+    width: 604px;
+    height: 320px;
+    border:  none;
+    padding: 0px;
+    overflow: hidden;
+}
+
+.spellchecker iframe {
+    border: none;
+    margin: 0px 1px 1px 0px;
+    width: 600px !important;
+    height: 293px !important;
+}
+
+.commandbar {
+    border: 1px solid #2e3436;
+    background: #555753;
+    height: 26px;
+    overflow: hidden;
+    padding: 1px;
+    margin-bottom: -1px;
+    margin-right: 1px;
+}
+
+.infobar {
+    width: 599px;
+    margin-top: 3px;
+    border: 1px solid #2e3436;
+    height: 25px;
+    overflow: hidden;
+    padding: 1px;
+    background: #555753;
+    color: #eeeeec;
+}
+
+div.infobar div.infotext {
+    clear: left;
+    float: left;
+    font-size: 1.1em;
+    height: 25px;
+    width: 75%;
+    padding-left: 5px;
+    padding-top: 5px;
+}
+
+div.infobar div#copyright {
+    clear: right;
+    float: right;
+    font-size: 11px;
+    font-weight: bold;
+    height: 25px;
+    padding-right: 5px;
+    padding-top: 0px;
+    text-align: right;
+    width:22%;
+}
+
+
+.commandbar button {
+    border: 1px solid #555753;
+    background-color: #d3d7cf;
+    padding: 0px;
+    margin: 0px;
+    font: menu;
+    vertical-align: middle;
+}
+.commandbar button img {
+    margin-right: 5px;
+}
+
+.commandbar button:hover {
+    background-color: #eeeeec;
+}
+
+.fixed {
+        text-decoration: line-through;
+}
+
+.spellchecker_content {
+    width: 70%;
+    border: 1px solid #2e3436;
+    padding: 5px;
+    margin: 6px;
+}
+
+div.checker {
+    float: left;
+}
+
+
+.float-break
+{
+    height: 1%; /* Fix for IE */
+}
+
+.float-break:after /* Terminate floating elements flow */
+{
+    content: "-";
+    height: 0;
+    font-size: 0;
+    visibility: hidden;
+    display: block;
+    clear: both;
+}
+
+
+
+div#debugwindow {
+    border: 5px solid #ce5c00;
+    background-color: #eeeeec;
+    height: 200px;
+    width: 200px;
+    float: right;
+    position:absolute;
+    cursor:hand;
+    left:0px;
+    top:0px;
+}
+
+div#debugwindowcontent {
+    border: 1px solid #000;
+    overflow-x:none;
+    overflow-y:scroll;
+    height: 193px;
+    position:absolute;
+    width: 193px;
+    padding: 3px;
+    font-weight: bold;
+    left: 0px;
+}
+
+div#debugwindow h3 {
+    color: #babdb6;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    padding-left: 0px;
+    padding-top: 100px;
+    font-size: 2.2em;
+    text-align: center;
+    height: 200px;
+    width: 200px;
+    float:left;
+}
+
+span.msg-warn {
+    color: #c4a000;
+}
+
+span.msg-debug {
+    color: #2e3436;
+}
+
+span.msg-error {
+    color: #a40000;
+}
+
+
+.sc_info {
+    position:relative;
+    z-index:24;
+    color:#000;
+    text-decoration:none;
+}
+
+.sc_info:hover {
+    z-index:25;
+}
+
+.sc_info  span {
+    display: none
+}
+
+.sc_info:hover span { /*the span will display just on :hover state*/
+    display:block;
+    position:absolute;
+    top:5px;
+    left:5px;
+    width:100px;
+    border:1px solid #ccc;
+    background-color:#eeeeec;
+    color:#000;
+    text-align: left;
+    text-decoration: none;
+    padding: 2px;
+}
+
