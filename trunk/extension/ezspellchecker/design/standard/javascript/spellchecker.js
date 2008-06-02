@@ -106,7 +106,7 @@ function WebFXLiteSpellChecker( el ) {
     el.parentNode.insertBefore(elCont, el);
     elCont.style.width = el.clientWidth + 'px';
     if ( isIE ) {
-        elCont.style.height = ( el.clientHeight + 4) + 'px'; 
+        elCont.style.height = ( el.clientHeight - 4 ) + 'px'; 
     }
     else {
         elCont.style.height = el.clientHeight + 'px'; 

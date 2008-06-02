@@ -290,38 +290,71 @@ debug ('_showSuggestionsMenu' + instance );
             doc   = webFXSpellCheckHandler.instances[n].doc;
     }    }
 
-    x = 0; y = 0;
-    for (o = frame; o; o = o.offsetParent) {
-        x += (o.offsetLeft - o.scrollLeft);
-        y += (o.offsetTop - o.scrollTop);
-    }
 
-//     if (document.all) {
-//         menu.style.left = x + (e.pageX || e.clientX) + 'px';
-//         menu.style.top  = y + (e.pageY || e.clientY) + (el.offsetHeight/2) + 'px';
-//     }
-//     else {
-//         menu.style.left = x + ((e.pageX || e.clientX) - document.body.scrollLeft) + 'px';
-//         menu.style.top  = y + ((e.pageY || e.clientY) + document.body.scrollTop) + (el.offsetHeight/2) + 'px';
-// 
-//     }
+    var pos = webFXSpellCheckHandler.instances[instance].elCont;
+    var dx = getElementAbsPosX(pos);
+    var dy = getElementAbsPosY(pos);
 
-    var ns4=document.layers
-    var ns6=document.getElementById&&!document.all
-    var ie4=document.all
+    var abspopupbottom = dy + menu.clientHeight + 10;
+    var abswindowbottom = GetAbsWindowBottom();
 
-        Yoffset=0;
-        Xoffset=0;
-    var x=(ns4||ns6)?e.pageX:event.clientX+document.body.scrollLeft;
-    menu.style.left=x+Xoffset +  "px";
 
-    var y=(ns4||ns6)?e.pageY:event.clientY+document.body.scrollTop;
-    menu.style.top=y+Yoffset +  "px";
+    if (abspopupbottom > abswindowbottom)
+        dy = dy - (abspopupbottom - abswindowbottom);
+
+
+    menu.style.left = dx + 'px';
+    menu.style.top = dy + 'px';
 
     menu.style.display = 'block';
 
     webFXSpellCheckHandler.activeWord = word;
 };
+
+
+function getElementAbsPosX(el)
+{
+    var dx = 0;
+    if (el.offsetParent) {
+        dx = el.offsetLeft + 8;
+        while (el = el.offsetParent) {
+            dx += el.offsetLeft;
+        }
+    }
+    return dx;
+}
+
+function getElementAbsPosY(el)
+{
+    var dy = 0;
+    if (el.offsetParent) {
+        dy = el.offsetTop + el.offsetHeight / 2;
+        while (el = el.offsetParent) {
+            dy += el.offsetTop;
+        }
+    }
+    return dy;
+}
+
+function GetAbsWindowBottom()
+{
+    var abswindowbottom = 0;
+    if (typeof(window.innerHeight) == 'number')
+        abswindowbottom = window.innerHeight;
+    else if (document.documentElement && document.documentElement.clientHeight)
+        abswindowbottom = document.documentElement.clientHeight;
+    else if (document.body && document.body.clientHeight)
+        abswindowbottom = document.body.clientHeight;
+ 
+    if (typeof(window.pageYOffset) == 'number')
+        abswindowbottom = abswindowbottom + window.pageYOffset;
+    else if (document.body && document.body.scrollTop)
+        abswindowbottom = abswindowbottom + document.body.scrollTop;
+    else if (document.documentElement && document.documentElement.scrollTop)
+        abswindowbottom = abswindowbottom + document.documentElement.scrollTop;
+    return abswindowbottom;
+}
+
 
 
 webFXSpellCheckHandler._replaceWord = function(instance, word) {
